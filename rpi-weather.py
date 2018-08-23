@@ -2,6 +2,7 @@ import requests
 from pymongo import MongoClient
 import sqlite3
 import matplotlib.pyplot as plt
+import datetime
 
 client = MongoClient()
 # conn = sqlite3.connect('temps.db')
@@ -20,7 +21,8 @@ print('the weather is imperial ', outside_temp)
 posts = db.posts
 weather_data = {
     'title': 'Outside Weather',
-    'temp': str(outside_temp)
+    'temp': str(outside_temp),
+    'date': datetime.datetime.utcnow()
 }
 result = posts.insert_one(weather_data)
 found_post = posts.find_one({'title': 'Outside Weather'})
