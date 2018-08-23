@@ -8,22 +8,23 @@ client = MongoClient()
 
 client = MongoClient('localhost', 27017)
 db = client.pymongo_test
-posts = db.posts
-post_data = {
-    'title': 'Python and MongoDB',
-    'content': 'PyMongo is fun, you guys',
-    'author': 'Scott'
-}
-result = posts.insert_one(post_data)
+
 #print('One post: {0}'.format(result))
-found_post = posts.find_one({'author': 'Scott'})
-print('\n', found_post)
 
 r = requests.get('http://api.openweathermap.org/data/2.5/weather?lat=39.7521448&lon=-105.0233895&APPID=977c4567f54065e97d732e98b76e6180&units=imperial')
 response = r.json()
 print(response)
-temp = float(response['main']['temp'])
-print('the weather is imperial ', temp)
+outside_temp = str(float(response['main']['temp']))
+print('the weather is imperial ', outside_temp)
+
+posts = db.posts
+weather_data = {
+    'title': 'Outside Weather',
+    'temp': str(outside_temp)
+}
+result = posts.insert_one(weather_data)
+found_post = posts.find_one({'title': 'Outside Weather'})
+print('\n', found_post)
 
 # print(outside_weather)
 # plt.plot(outside_weather)
