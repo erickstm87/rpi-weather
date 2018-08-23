@@ -1,20 +1,15 @@
 import requests
 from pymongo import MongoClient
-import sqlite3
 import matplotlib.pyplot as plt
 import datetime
-
-client = MongoClient()
-# conn = sqlite3.connect('temps.db')
+import pprint
 
 client = MongoClient('localhost', 27017)
 db = client.pymongo_test
 
-#print('One post: {0}'.format(result))
-
 r = requests.get('http://api.openweathermap.org/data/2.5/weather?lat=39.7521448&lon=-105.0233895&APPID=977c4567f54065e97d732e98b76e6180&units=imperial')
 response = r.json()
-print(response)
+pprint.pprint(response)
 outside_temp = str(float(response['main']['temp']))
 print('the weather is imperial ', outside_temp)
 
@@ -26,14 +21,17 @@ weather_data = {
 }
 result = posts.insert_one(weather_data)
 found_post = posts.find_one({'title': 'Outside Weather'})
-print('\n', found_post)
+print('Here is the data in db:', found_post)
 
-# print(outside_weather)
-# plt.plot(outside_weather)
+outside_weather = []
+for post in posts.find():
+    outside_weather.append(post['temp'])
+print('here is the collection of temps: ', outside_weather)
+plt.plot(outside_weather)
 
-# plt.title('Temp In and Out of Place: ', fontsize=24)
-# plt.xlabel('Time', fontsize=14)
-# plt.ylabel('Temp Farenheit', fontsize=14)
+plt.title('Temp In and Out of Place with ' + response['weather'][0]['description'].title() + ' Conditions: ', fontsize=24)
+plt.xlabel('Time', fontsize=14)
+plt.ylabel('Temp Farenheit', fontsize=14)
 
 # plt.show()
 
