@@ -48,3 +48,6 @@ line_chart.render_to_file('weather.svg')
 
 # for post in posts.find():
 #     posts.remove()
+def remove_entries():
+    for post in posts.find():
+        posts.remove()
