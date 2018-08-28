@@ -40,14 +40,16 @@ for post in posts.find():
 print(outside_weather)
 print(the_time)
 
+def remove_entries():
+    for post in posts.find():
+        posts.remove()
+
+if(len(outside_weather) >= 10):
+    print('hello')
+    remove_entries()
+
 line_chart = pygal.Line()
 line_chart.title = ('Temp In and Out of Place with ' + response['weather'][0]['description'].title() + ' Conditions: ')
 line_chart.x_labels = map(str, the_time)
 line_chart.add('Outside', outside_weather)
 line_chart.render_to_file('weather.svg')
-
-# for post in posts.find():
-#     posts.remove()
-def remove_entries():
-    for post in posts.find():
-        posts.remove()
