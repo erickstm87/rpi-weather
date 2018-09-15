@@ -1,11 +1,17 @@
 import requests
 from pymongo import MongoClient
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import pygal
 from datetime import datetime, timedelta
 import pprint
 from pytz import timezone
 import pytz
+import Adafruit_DHT as dht
+
+# here to get the temp for inside
+h,t = dht.read_retry(dht.DHT22, 4)
+faren = (t * 9/5) + 32
+print ('Temp={0:0.1f}*F  Humidity={1:0.1f}%'.format(faren, h))
 
 client = MongoClient('localhost', 27017)
 db = client.pymongo_test
@@ -27,24 +33,27 @@ posts = db.posts
 weather_data = {
     'title': 'Outside Weather',
     'temp': outside_temp,
-    'date': current_time
+    'inside': int(faren),
+    'date': str(hourly)
 }
 result = posts.insert_one(weather_data)
 found_post = posts.find_one({'title': 'Outside Weather'})
 
-outside_weather, the_time = [], []
+inside_weather, outside_weather, the_time = [], [], []
 for post in posts.find():
     outside_weather.append(post['temp'])
+    inside_weather.append(post['inside'])
     the_time.append(post['date'])
 
 print(outside_weather)
+print(inside_weather)
 print(the_time)
 
 def remove_entries():
     for post in posts.find():
         posts.remove()
 
-if(len(outside_weather) >= 72):
+if(len(outside_weather) >= 24):
     print('hello')
     remove_entries()
 
@@ -52,4 +61,5 @@ line_chart = pygal.Line()
 line_chart.title = ('Temp In and Out of Place with ' + response['weather'][0]['description'].title() + ' Conditions: ')
 line_chart.x_labels = map(str, the_time)
 line_chart.add('Outside', outside_weather)
+line_chart.add('Inside', inside_weather)
 line_chart.render_to_file('weather.svg')
