@@ -53,7 +53,7 @@ def remove_entries():
     for post in posts.find():
         posts.remove()
 
-if(len(outside_weather) >= 24):
+if(outside_temp == 24):
     print('hello')
     remove_entries()
 
