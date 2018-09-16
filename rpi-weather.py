@@ -53,7 +53,7 @@ def remove_entries():
     for post in posts.find():
         posts.remove()
 
-if(outside_temp == 24):
+if(hourly== 0):
     print('hello')
     remove_entries()
 
