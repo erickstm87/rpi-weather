@@ -42,4 +42,4 @@ chart.title = 'Scala'
 chart.x_labels = names
 
 chart.add('', plot_dicts)
-chart.render_to_file('/Users/terickson/rpi-weather/api-calls/scala_repos.svg')
+chart.render_to_file('/home/pi/rpi-weather/api-calls/scala_repos.svg')

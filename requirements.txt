@@ -34,3 +34,7 @@ thefuck==3.27
 urllib3==1.23
 wcwidth==0.1.7
 Werkzeug==0.14.1
+Collecting pymongo==3.4.0
+  Downloading https://www.piwheels.org/simple/pymongo/pymongo-3.4.0-cp35-cp35m-linux_armv7l.whl (341kB)
+Installing collected packages: pymongo
+Successfully installed pymongo-3.7.1

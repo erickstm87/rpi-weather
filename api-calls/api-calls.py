@@ -24,7 +24,7 @@ for repo in repo_dicts:
     }
     plot_dicts.append(plot_dict)
 
-my_style = LS('#333366', base_style=LCS)
+my_style = LS('#e6e600', base_style=LCS)
 my_style.title_font_size = 24
 my_style.label_font_size = 14
 my_style.major_label_font_size = 18
@@ -42,4 +42,4 @@ chart.title = 'Python'
 chart.x_labels = names
 
 chart.add('', plot_dicts)
-chart.render_to_file('/Users/terickson/rpi-weather/api-calls/python_repos.svg')
+chart.render_to_file('/home/pi/rpi-weather/api-calls/python_repos.svg')
